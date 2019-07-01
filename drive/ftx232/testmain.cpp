@@ -66,7 +66,6 @@ int main() {
     spiConf.configOptions = SPI_CONFIG_OPTION_MODE2 | SPI_CONFIG_OPTION_CS_DBUS5 |
                             SPI_CONFIG_OPTION_CS_ACTIVELOW;
     spiConf.LatencyTimer = 0;
-	std
     spiConf.Pin = 0;
     ftStatus = SPI_InitChannel(spiHandle, &spiConf);
     CheckStatus(ftStatus, "SPI Init");
