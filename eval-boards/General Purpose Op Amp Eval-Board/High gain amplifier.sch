@@ -1,0 +1,294 @@
+EESchema Schematic File Version 4
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 4 4
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Amplifier_Operational:OPA847xD U2
+U 1 1 5D1F66CD
+P 5250 3600
+F 0 "U2" H 5594 3646 50  0000 L CNN
+F 1 "OPA847xD" H 5594 3555 50  0000 L CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 5250 3600 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/opa847.pdf" H 5250 3800 50  0001 C CNN
+	1    5250 3600
+	1    0    0    -1  
+$EndComp
+Text HLabel 3250 3500 0    50   Input ~ 0
+signal_in
+Text HLabel 3250 4800 0    50   Input ~ 0
+GND
+$Comp
+L Device:R R5
+U 1 1 5D1F7B16
+P 4150 3500
+F 0 "R5" V 3943 3500 50  0000 C CNN
+F 1 "R" V 4034 3500 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 4080 3500 50  0001 C CNN
+F 3 "~" H 4150 3500 50  0001 C CNN
+	1    4150 3500
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C C6
+U 1 1 5D1F8135
+P 4800 3050
+F 0 "C6" H 4915 3096 50  0000 L CNN
+F 1 "C" H 4915 3005 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 4838 2900 50  0001 C CNN
+F 3 "~" H 4800 3050 50  0001 C CNN
+	1    4800 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R6
+U 1 1 5D1FE496
+P 5450 4250
+F 0 "R6" V 5243 4250 50  0000 C CNN
+F 1 "R" V 5334 4250 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 5380 4250 50  0001 C CNN
+F 3 "~" H 5450 4250 50  0001 C CNN
+	1    5450 4250
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J6
+U 1 1 5D1FFCEA
+P 3350 3300
+F 0 "J6" H 3458 3481 50  0000 C CNN
+F 1 "TP3" H 3458 3390 50  0000 C CNN
+F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 3350 3300 50  0001 C CNN
+F 3 "~" H 3350 3300 50  0001 C CNN
+	1    3350 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 5D200692
+P 3900 3850
+F 0 "R7" H 3830 3804 50  0000 R CNN
+F 1 "R" H 3830 3895 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 3830 3850 50  0001 C CNN
+F 3 "~" H 3900 3850 50  0001 C CNN
+	1    3900 3850
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R8
+U 1 1 5D20158C
+P 4450 3850
+F 0 "R8" H 4380 3804 50  0000 R CNN
+F 1 "R" H 4380 3895 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 4380 3850 50  0001 C CNN
+F 3 "~" H 4450 3850 50  0001 C CNN
+	1    4450 3850
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3250 3500 3550 3500
+Wire Wire Line
+	3900 3700 3900 3500
+Connection ~ 3900 3500
+Wire Wire Line
+	3900 3500 4000 3500
+Wire Wire Line
+	4300 3500 4450 3500
+Wire Wire Line
+	4450 3700 4450 3500
+Connection ~ 4450 3500
+Wire Wire Line
+	4450 3500 4950 3500
+Wire Wire Line
+	3250 4800 3900 4800
+Wire Wire Line
+	3900 4000 3900 4800
+Connection ~ 3900 4800
+Wire Wire Line
+	4450 4000 4450 4800
+Text HLabel 3250 2850 0    50   Input ~ 0
+VCC
+Text HLabel 3250 4350 0    50   Input ~ 0
+VEE
+Wire Wire Line
+	3250 2850 4500 2850
+Wire Wire Line
+	5150 2850 5150 3300
+Wire Wire Line
+	5150 4350 5000 4350
+Wire Wire Line
+	5150 3900 5150 4350
+Wire Wire Line
+	3550 3300 3550 3500
+Connection ~ 3550 3500
+Wire Wire Line
+	3550 3500 3900 3500
+Text HLabel 7250 3600 2    50   Output ~ 0
+OUT
+Wire Wire Line
+	5550 3600 6200 3600
+Wire Wire Line
+	4950 3700 4850 3700
+Wire Wire Line
+	4850 3700 4850 4250
+Wire Wire Line
+	4850 4250 5300 4250
+Wire Wire Line
+	5600 4250 6200 4250
+Wire Wire Line
+	6200 4250 6200 3600
+$Comp
+L Device:C C10
+U 1 1 5D205372
+P 7000 3600
+F 0 "C10" V 6748 3600 50  0000 C CNN
+F 1 "C" V 6839 3600 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 7038 3450 50  0001 C CNN
+F 3 "~" H 7000 3600 50  0001 C CNN
+	1    7000 3600
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7150 3600 7200 3600
+$Comp
+L Connector:Conn_01x01_Male J7
+U 1 1 5D206729
+P 7000 3900
+F 0 "J7" H 7108 4081 50  0000 C CNN
+F 1 "TP4" H 7108 3990 50  0000 C CNN
+F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 7000 3900 50  0001 C CNN
+F 3 "~" H 7000 3900 50  0001 C CNN
+	1    7000 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7200 3900 7200 3600
+Connection ~ 7200 3600
+Wire Wire Line
+	7200 3600 7250 3600
+$Comp
+L Device:C C7
+U 1 1 5D207E3C
+P 4500 3050
+F 0 "C7" H 4615 3096 50  0000 L CNN
+F 1 "C" H 4615 3005 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 4538 2900 50  0001 C CNN
+F 3 "~" H 4500 3050 50  0001 C CNN
+	1    4500 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR05
+U 1 1 5D20813E
+P 4650 3300
+F 0 "#PWR05" H 4650 3050 50  0001 C CNN
+F 1 "GND" H 4655 3127 50  0000 C CNN
+F 2 "" H 4650 3300 50  0001 C CNN
+F 3 "" H 4650 3300 50  0001 C CNN
+	1    4650 3300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4500 3200 4650 3200
+Wire Wire Line
+	4650 3200 4650 3300
+Wire Wire Line
+	4650 3200 4800 3200
+Connection ~ 4650 3200
+Wire Wire Line
+	4800 2900 4800 2850
+Connection ~ 4800 2850
+Wire Wire Line
+	4800 2850 5150 2850
+Wire Wire Line
+	4500 2900 4500 2850
+Connection ~ 4500 2850
+Wire Wire Line
+	4500 2850 4800 2850
+$Comp
+L Device:C C8
+U 1 1 5D209898
+P 4700 4600
+F 0 "C8" H 4815 4646 50  0000 L CNN
+F 1 "C" H 4815 4555 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 4738 4450 50  0001 C CNN
+F 3 "~" H 4700 4600 50  0001 C CNN
+	1    4700 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C9
+U 1 1 5D20A2BC
+P 5000 4600
+F 0 "C9" H 5115 4646 50  0000 L CNN
+F 1 "C" H 5115 4555 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 5038 4450 50  0001 C CNN
+F 3 "~" H 5000 4600 50  0001 C CNN
+	1    5000 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 4450 4700 4350
+Connection ~ 4700 4350
+Wire Wire Line
+	4700 4350 3250 4350
+Wire Wire Line
+	5000 4450 5000 4350
+Connection ~ 5000 4350
+Wire Wire Line
+	5000 4350 4700 4350
+Wire Wire Line
+	4700 4750 4700 4800
+Wire Wire Line
+	4700 4800 4450 4800
+Connection ~ 4450 4800
+Wire Wire Line
+	5000 4750 5000 4800
+Wire Wire Line
+	5000 4800 4700 4800
+Connection ~ 4700 4800
+NoConn ~ 5250 3900
+Wire Wire Line
+	3900 4800 4200 4800
+$Comp
+L power:GND #PWR0101
+U 1 1 5D24CE62
+P 4200 4950
+F 0 "#PWR0101" H 4200 4700 50  0001 C CNN
+F 1 "GND" H 4205 4777 50  0000 C CNN
+F 2 "" H 4200 4950 50  0001 C CNN
+F 3 "" H 4200 4950 50  0001 C CNN
+	1    4200 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4200 4800 4200 4950
+Connection ~ 4200 4800
+Wire Wire Line
+	4200 4800 4450 4800
+$Comp
+L Device:R R?
+U 1 1 5D2628BA
+P 6450 3600
+F 0 "R?" V 6243 3600 50  0000 C CNN
+F 1 "R" V 6334 3600 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 6380 3600 50  0001 C CNN
+F 3 "~" H 6450 3600 50  0001 C CNN
+	1    6450 3600
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6300 3600 6200 3600
+Connection ~ 6200 3600
+Wire Wire Line
+	6600 3600 6850 3600
+$EndSCHEMATC
