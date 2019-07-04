@@ -1,0 +1,8 @@
+
+# related to  Visual Studio IDE
+.vs
+out
+
+# relative to Clion-IDE
+.idea
+cmake-build-debug 

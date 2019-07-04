@@ -6,7 +6,6 @@
 #define AFTESTER_SRC_AD9910DRIVER_H_
 #include "libMPSSE_spi.h"
 #include "FTD2xxBitMode.h"
-
 class AD9910Driver {
 
 public:
