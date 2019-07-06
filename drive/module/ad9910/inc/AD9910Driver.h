@@ -1,16 +1,9 @@
-//
-// Created by cn on 2019/5/11.
-//
-
-#ifndef AFTESTER_SRC_AD9910DRIVER_H_
-#define AFTESTER_SRC_AD9910DRIVER_H_
-#include "libMPSSE_spi.h"
-#include "FTD2xxBitMode.h"
+#include <lib/libMPSSE_spi.h>
 #include "IAbstractSPI.hpp"
 #include "IAbstractGPIO.hpp"
+#ifndef AFTESTER_SRC_AD9910DRIVER_H_
+#define AFTESTER_SRC_AD9910DRIVER_H_
 class AD9910Driver {
-
-
 public:
   AD9910Driver(IAbstractSPI *SPIHandle,uint16 CsAddress,IAbstractGPIO<uint8> *GPIOHandle );
   bool WriteRegister(uint8 address, uint8 length, uint8 *data);

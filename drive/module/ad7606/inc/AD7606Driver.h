@@ -6,7 +6,7 @@
 #define AFTESTER_INC_AD7606DRIVER_H_
 
 #include "../../headers/libMPSSE_spi.h"
-#include "../../common/inc/FTD2xxBitMode.h"
+#include "FTD2xxBitMode.h"
 #include <vector>
 
 class AD7606Driver {

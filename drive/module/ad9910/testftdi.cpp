@@ -5,15 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <thread>
-#include "spline.h"
-
-#include "AD9910Driver.h"
-#include "FTD2xxBitMode.h"
-#include "ftd2xx.h"
-#include "ftd4232driver.h"
-#include "libMPSSE_spi.h"
+#include <lib/libMPSSE_spi.h>
 #include "SPIBridge.h"
 #include "GPIOBridge.h"
+#include "AD9910Driver.h"
 
 using namespace std;
 auto CheckStatus = [](FT_STATUS ft, const char *s) {	
@@ -30,26 +25,17 @@ auto CheckStatus = [](FT_STATUS ft, const char *s) {
 
 int main() {
     Init_libMPSSE();
-    FTD4232driver tFTD;
-    tFTD.listAllDevices();
-    tFTD.listSPIDevices();
     FT_HANDLE spiHandle;
     FT_HANDLE GPIOHandle;
     FT_HANDLE UartHandle;
     printf("open temp file\n");
     FILE * fp = fopen("/tmp/test.plot","w");
-
     FT_STATUS ftStatus;
-
     printf("open  GPIO Port\n");
     ftStatus = FT_Open(3, &GPIOHandle);
     if(!CheckStatus(ftStatus, "GPIO Port Open"))
         return 0;
-
-
-
     ftStatus = FT_Open(1, &UartHandle);
-
     printf("open  Uart Port\n");
     if(!CheckStatus(ftStatus, "Uart Port Open"))
         return 0;

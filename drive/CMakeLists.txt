@@ -2,13 +2,10 @@ PROJECT(driver)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.8.2)
 
 include_directories(
-        gio/inc
+        bridge/ftdi
+        bridge/stm32
 )
-add_subdirectory(ftx232)
+add_subdirectory(module/ad9910)
 
-add_executable(testmain
-        testmain.cpp
-        ../gio/IAbstractSPI.hpp
-        )
 
 

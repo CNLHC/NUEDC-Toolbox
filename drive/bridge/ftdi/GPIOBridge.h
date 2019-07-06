@@ -1,6 +1,6 @@
 #include "IAbstractGPIO.hpp"
-#include "ftd2xx.h"
-#include "libMPSSE_spi.h"
+#include <lib/ftd2xx.h>
+#include <lib/libMPSSE_spi.h>
 
 #ifndef DRIVER_GPIOBRIDGE_H
 #define DRIVER_GPIOBRIDGE_H
