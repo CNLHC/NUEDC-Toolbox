@@ -31,18 +31,21 @@ bool AD9910Driver::ReadRegister(uint8 address, uint8 length, uint8 *buf) {
 
 AD9910Driver::AD9910Driver(IAbstractSPI *SPIHandle,
                            uint16 CSAddress,
-                           FT_HANDLE GPIOHandle,
-                           uint8 UpdatePinNum) : mCsAddress(CSAddress),
+                          IAbstractGPIO<uint8>*GPIOHandle) : mCsAddress(CSAddress),
                                                  mSPIHandle(SPIHandle),
-                                                 mGPIOHandle(GPIOHandle),
-                                                 mIOUpdatePinNo(UpdatePinNum) {}
+                                                 mGPIOHandle(GPIOHandle)
+{}
+
+
 
 void AD9910Driver::pIOUReset() {
-    mBitMode.BitReset(mGPIOHandle, mIOUpdatePinNo);
+//    mBitMode.BitReset(mGPIOHandle, mIOUpdatePinNo);
+    mGPIOHandle->ReSetBit(4);
 }
 
 void AD9910Driver::pIOUSet() {
-    mBitMode.BitSet(mGPIOHandle, mIOUpdatePinNo);
+//    mBitMode.BitSet(mGPIOHandle, mIOUpdatePinNo);
+    mGPIOHandle->SetBit(4);
 }
 
 void AD9910Driver::Init() {

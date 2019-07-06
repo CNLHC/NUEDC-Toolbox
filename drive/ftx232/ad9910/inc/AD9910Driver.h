@@ -7,10 +7,12 @@
 #include "libMPSSE_spi.h"
 #include "FTD2xxBitMode.h"
 #include "IAbstractSPI.hpp"
+#include "IAbstractGPIO.hpp"
 class AD9910Driver {
 
+
 public:
-  AD9910Driver(IAbstractSPI *SPIHandle,uint16 CsAddress,FT_HANDLE GPIOHandle,uint8 UpdatePinNum);
+  AD9910Driver(IAbstractSPI *SPIHandle,uint16 CsAddress,IAbstractGPIO<uint8> *GPIOHandle );
   bool WriteRegister(uint8 address, uint8 length, uint8 *data);
   bool ReadRegister(uint8 address, uint8 length, uint8 *buf);
   void Init();
@@ -20,12 +22,10 @@ public:
 private:
   void pIOUSet();
   void pIOUReset();
-
   IAbstractSPI *mSPIHandle;
-  FT_HANDLE mGPIOHandle;
+  IAbstractGPIO<uint8> *mGPIOHandle;
   uint8  mIOUpdatePinNo;
   uint32 mMPSSEConfig;
-  FTD2xxBitMode mBitMode;
   uint16 mCsAddress;
 
 };

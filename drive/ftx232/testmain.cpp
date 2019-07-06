@@ -1,4 +1,3 @@
-
 #include <vector>
 #include <chrono>
 #include <math.h>
@@ -13,7 +12,8 @@
 #include "ftd2xx.h"
 #include "ftd4232driver.h"
 #include "libMPSSE_spi.h"
-#include "bridge.h"
+#include "SPIBridge.h"
+#include "GPIOBridge.h"
 
 using namespace std;
 auto CheckStatus = [](FT_STATUS ft, const char *s) {	
@@ -77,8 +77,9 @@ int main() {
     CheckStatus(ftStatus, "SPI Init");
 
     auto gSPI= new ftdiSPI(spiHandle,SPI_CONFIG_OPTION_MODE2 | SPI_CONFIG_OPTION_CS_DBUS5 |SPI_CONFIG_OPTION_CS_ACTIVELOW);
+    auto gGPIO = new ftdiGPIO(GPIOHandle);
 
-    auto h9910 = AD9910Driver(gSPI,0, GPIOHandle, 4 );
+    auto h9910 = AD9910Driver(gSPI,0,gGPIO);
     auto voltageMapping = [](double voltage)
     {
         return uint16(23.396* voltage  - 26.597);

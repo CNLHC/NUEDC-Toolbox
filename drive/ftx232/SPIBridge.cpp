@@ -1,7 +1,7 @@
 #include "IAbstractSPI.hpp"
 #include "ftd2xx.h"
 #include "libMPSSE_spi.h"
-#include "bridge.h"
+#include "SPIBridge.h"
 
 
 ftdiSPI::ftdiSPI(FT_HANDLE spiHandle,uint32 MPSSEConfig):mSPIHandle(spiHandle),mMPSSEConf(MPSSEConfig){}

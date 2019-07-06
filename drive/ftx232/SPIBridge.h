@@ -16,7 +16,5 @@ private:
     ChannelConfig SPIConf;
     uint32_t  mMPSSEConf;
 };
-
-
 #endif
 

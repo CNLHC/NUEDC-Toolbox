@@ -14,14 +14,16 @@ add_subdirectory(ad9910)
 
 
 add_library( ftdicommon
-		bridge.cpp
+		SPIBridge.cpp
+		GPIOBridge.cpp
         )
 add_executable(ft232testmain
 		testmain.cpp
-		bridge.cpp
+		SPIBridge.cpp
+		GPIOBridge.cpp
         ../gio/IAbstractSPI.hpp
+		../gio/IAbstractGPIO.hpp )
 
-		)
 target_link_libraries(ft232testmain
 		ftd2xx
 		MPSSE
