@@ -1,10 +1,10 @@
-#include "IAbstractSPI.h"
+#include "IAbstractSPI.hpp"
 #include "ftd2xx.h"
 #include "libMPSSE_spi.h"
 #include "bridge.h"
 
 
-ftdiSPI::ftdiSPI(FT_HANDLE *spiHandle):mSPIHandle(spiHandle){}
+ftdiSPI::ftdiSPI(FT_HANDLE spiHandle,uint32 MPSSEConfig):mSPIHandle(spiHandle),mMPSSEConf(MPSSEConfig){}
 
 void ftdiSPI::ReadBytes(uint8_t * buf ,uint16_t bytes,uint16_t timeout ) {
     SPI_Read(mSPIHandle,buf,bytes, &mDummy,
@@ -29,7 +29,7 @@ void ftdiSPI::WriteBytes(uint8_t *buf, uint16_t bytes, uint16_t timeout) {
               SPI_TRANSFER_OPTIONS_SIZE_IN_BYTES);
 }
 
-void ftdiSPI::WriteBytes(uint8_t *buf, uint16_t bytes, uint16_t timeout,bool disableCS) {
+void ftdiSPI::WriteBytes(uint8_t *buf, uint16_t bytes, uint16_t timeout,bool disableCS){
     if(disableCS)
     SPI_Write(mSPIHandle, buf, bytes, &mDummy,
               SPI_TRANSFER_OPTIONS_CHIPSELECT_DISABLE|
@@ -44,10 +44,10 @@ void ftdiSPI::WriteBytes(uint8_t *buf, uint16_t bytes, uint16_t timeout,bool dis
 void ftdiSPI::ChangeCSAddress(CSAddr address){
     //Use MPSSEPort  Address
     if(address>=0 && address<5){
-
+        SPI_ChangeCS(mSPIHandle,(this->mMPSSEConf)&(~SPI_CONFIG_OPTION_CS_MASK)|(address<<2));
     }
-
 }
+
 
 
 

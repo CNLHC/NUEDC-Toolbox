@@ -9,6 +9,8 @@
 
 class IAbstractSPI {
 public:
+    IAbstractSPI(){};
+    virtual ~IAbstractSPI(){}
     typedef uint16_t CSAddr;
     /*!
      * read some bytes
@@ -50,7 +52,7 @@ public:
       *
       * @param address  cs address
       */
-    virtual void ChangeCSAddress(CSAddr address);
+    virtual void ChangeCSAddress(CSAddr address)=0;
 
 };
 

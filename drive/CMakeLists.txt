@@ -8,7 +8,7 @@ add_subdirectory(ftx232)
 
 add_executable(testmain
         testmain.cpp
-        gio/IAbstractSPI.h
+        ../gio/IAbstractSPI.hpp
         )
 
 

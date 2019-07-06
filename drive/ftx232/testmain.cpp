@@ -13,6 +13,7 @@
 #include "ftd2xx.h"
 #include "ftd4232driver.h"
 #include "libMPSSE_spi.h"
+#include "bridge.h"
 
 using namespace std;
 auto CheckStatus = [](FT_STATUS ft, const char *s) {	
@@ -45,6 +46,8 @@ int main() {
     if(!CheckStatus(ftStatus, "GPIO Port Open"))
         return 0;
 
+
+
     ftStatus = FT_Open(1, &UartHandle);
 
     printf("open  Uart Port\n");
@@ -59,7 +62,10 @@ int main() {
     CheckStatus(ftStatus, "SPI Port Open");
 
     ftStatus = FT_SetBitMode(GPIOHandle, 0xff, FT_BITMODE_ASYNC_BITBANG);
+    unsigned int dummy;
+    unsigned  char ch = 0x00;
     CheckStatus(ftStatus, "GPIO Init");
+    FT_Write(GPIOHandle,&ch, 1, &dummy);
 
     ChannelConfig spiConf;
     spiConf.ClockRate = 1500000;
@@ -70,18 +76,17 @@ int main() {
     ftStatus = SPI_InitChannel(spiHandle, &spiConf);
     CheckStatus(ftStatus, "SPI Init");
 
-    auto h9910 =
-            AD9910Driver(spiHandle, GPIOHandle, 4,
-                         SPI_CONFIG_OPTION_MODE0 | SPI_CONFIG_OPTION_CS_DBUS3 |
-                         SPI_CONFIG_OPTION_CS_ACTIVELOW);
+    auto gSPI= new ftdiSPI(spiHandle,SPI_CONFIG_OPTION_MODE2 | SPI_CONFIG_OPTION_CS_DBUS5 |SPI_CONFIG_OPTION_CS_ACTIVELOW);
 
-    auto voltageMapping = [](double voltage) {
+    auto h9910 = AD9910Driver(gSPI,0, GPIOHandle, 4 );
+    auto voltageMapping = [](double voltage)
+    {
         return uint16(23.396* voltage  - 26.597);
     };
 
     printf("Initing 9910\n");
     h9910.Init();
-    h9910.setSingleTuneOutput(1024,20000000);
+    h9910.setSingleTuneOutput(0x3FFF,150000000);
 
 	getchar();
 
