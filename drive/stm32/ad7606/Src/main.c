@@ -23,7 +23,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
+#include "arm_math.h"
+#include "arm_const_structs.h"
+#include "AD7606.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,29 +37,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define AD7606OS0_H HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_SET)
-#define AD7606OS0_L HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET)
-#define AD7606OS1_H HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET)
-#define AD7606OS1_L HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET)
-#define AD7606OS2_H HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET)
-#define AD7606OS2_L HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET)
-
-#define AD7606_CONVST_A_H HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET)
-#define AD7606_CONVST_A_L HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET)
-#define AD7606_CONVST_B_H HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET)
-#define AD7606_CONVST_B_L HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET)
-
-#define AD7606_SCLK_H HAL_GPIO_WritePin(GPIOC,GPIO_PIN_10, GPIO_PIN_SET)
-#define AD7606_SCLK_L HAL_GPIO_WritePin(GPIOC,GPIO_PIN_10, GPIO_PIN_RESET)
-#define AD7606_RESET_H HAL_GPIO_WritePin(GPIOC,GPIO_PIN_11, GPIO_PIN_SET)
-#define AD7606_RESET_L HAL_GPIO_WritePin(GPIOC,GPIO_PIN_11, GPIO_PIN_RESET)
-#define AD7606_CS_H HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12, GPIO_PIN_SET)
-#define AD7606_CS_L HAL_GPIO_WritePin(GPIOC,GPIO_PIN_12, GPIO_PIN_RESET)
-
-#define AD7606_BUSY HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4)
-#define AD7606_DOUTB HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7)
-#define AD7606_DOUTA HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)
-
+#define TEST_LENGTH_SAMPLES 2048
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -66,23 +47,39 @@
 
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
-uint16_t test1,test2;//Waveform array subscript
-uint16_t datatemp[8];//AD7606 data acquisition TEMP
+// uint16_t datatemp[8];//AD7606 data acquisition TEMP
+// int ch1_data[2048];//CH1 data array
+// int ch1_mag[1024];
+// uint16_t data_points = 0;
+/* -------------------------------------------------------------------
+* External Input and Output buffer Declarations for FFT Bin Example
+* ------------------------------------------------------------------- */
+extern uint16_t datatemp[8];
+extern int ch_data[DATA_LENGTH];
+static float32_t testOutput[TEST_LENGTH_SAMPLES/2];
+
+/* ------------------------------------------------------------------
+* Global variables for FFT Bin Example
+* ------------------------------------------------------------------- */
+uint32_t fftSize = 1024;
+uint32_t ifftFlag = 0;
+uint32_t doBitReverse = 1;
+
+/* Reference index at which max energy of bin ocuurs */
+uint32_t refIndex = 213, testIndex = 0;
+char buffer[2048];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_USART6_UART_Init(void);
 /* USER CODE BEGIN PFP */
-void Delay(uint32_t nCount);
-void ADC1_Configuration(void);
-void AD7606_SETOS(uint8_t osv);
-void AD7606_RESET(void);
-uint16_t ad7606_ReadBytes(void);
-void AD7606_STARTCONV(void);
 
 /* USER CODE END PFP */
 
@@ -121,39 +118,40 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-  AD7606_SETOS(0X00);//200Kbps
-  AD7606_RESET();
-  AD7606_CONVST_A_H;
-  AD7606_CONVST_B_H;
-  test1=0;
-  test2=100;
+
+  float32_t maxValue;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_UART_Transmit(&huart2, (uint8_t *)"-", 1, 32);
+  Data_Acquire1024(0);
+  // arm_cfft_q31(&arm_cfft_sR_q31_len1024, ch1_data, ifftFlag, doBitReverse);
+  // arm_cmplx_mag_q31(ch1_data, ch1_mag, fftSize);
+
+  HAL_UART_Transmit(&huart2, (uint8_t *)"b", 1, 32);
+  for(int i=0;i<1024;i++)
+  {
+		if((ch_data[i]>>15)==1)
+		{
+			ch_data[i]-=65536;
+		}
+   sprintf(buffer, "%.5Lf", (long double)ch_data[i]*10.00/32767.0);
+   HAL_UART_Transmit(&huart2, (uint8_t *)buffer, 6, 32);
+   HAL_UART_Transmit(&huart2, (uint8_t *)",", 1, 32);
+    // uint8_t temp_hi=ch_data[i]>>8;
+    // uint8_t temp_lo=ch_data[i]&0XFF;
+    // HAL_UART_Transmit(&huart2, &temp_hi, 1, 32);
+    // HAL_UART_Transmit(&huart2, &temp_lo, 1, 32);
+  }
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	if(!AD7606_BUSY)
-    {
-      AD7606_CS_L;
-      for(uint8_t i = 0;i < 8;i++)
-      {
-        datatemp[i]=ad7606_ReadBytes();//Read ADC data
-				uint8_t temp_hi=datatemp[i]>>8;
-				uint8_t temp_lo=datatemp[i]&0XFF;
-				HAL_UART_Transmit(&huart2, &temp_hi, 1, 32);
-				HAL_UART_Transmit(&huart2, &temp_lo, 1, 32);
-				
-      }
-      AD7606_CS_H;
-      AD7606_STARTCONV();
 
-      while(AD7606_BUSY);
-		}
   }
   /* USER CODE END 3 */
 }
@@ -167,16 +165,28 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
+  /** Configure the main internal regulator output voltage 
+  */
+  __HAL_RCC_PWR_CLK_ENABLE();
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLN = 180;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Activate the Over-Drive mode 
+  */
+  if (HAL_PWREx_EnableOverDrive() != HAL_OK)
   {
     Error_Handler();
   }
@@ -186,10 +196,10 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
   {
     Error_Handler();
   }
@@ -229,6 +239,39 @@ static void MX_USART2_UART_Init(void)
 }
 
 /**
+  * @brief USART6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART6_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART6_Init 0 */
+
+  /* USER CODE END USART6_Init 0 */
+
+  /* USER CODE BEGIN USART6_Init 1 */
+
+  /* USER CODE END USART6_Init 1 */
+  huart6.Instance = USART6;
+  huart6.Init.BaudRate = 115200;
+  huart6.Init.WordLength = UART_WORDLENGTH_8B;
+  huart6.Init.StopBits = UART_STOPBITS_1;
+  huart6.Init.Parity = UART_PARITY_NONE;
+  huart6.Init.Mode = UART_MODE_TX_RX;
+  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART6_Init 2 */
+
+  /* USER CODE END USART6_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -239,43 +282,46 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, OS0_Pin|OS1_Pin|OS2_Pin|SCLK_Pin 
-                          |RESET_Pin|CS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, OS0_Pin|OS1_Pin|OS2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, STA_Pin|STB_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOE, STB_Pin|STA_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pin : KEY0_Pin */
-  GPIO_InitStruct.Pin = KEY0_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(KEY0_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOF, SCK_Pin|RST_Pin|CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : OS0_Pin OS1_Pin OS2_Pin */
   GPIO_InitStruct.Pin = OS0_Pin|OS1_Pin|OS2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : STA_Pin STB_Pin */
-  GPIO_InitStruct.Pin = STA_Pin|STB_Pin;
+  /*Configure GPIO pins : STB_Pin STA_Pin */
+  GPIO_InitStruct.Pin = STB_Pin|STA_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SCLK_Pin RESET_Pin CS_Pin */
-  GPIO_InitStruct.Pin = SCLK_Pin|RESET_Pin|CS_Pin;
+  /*Configure GPIO pins : SCK_Pin RST_Pin CS_Pin */
+  GPIO_InitStruct.Pin = SCK_Pin|RST_Pin|CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : OUTA_Pin */
+  GPIO_InitStruct.Pin = OUTA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(OUTA_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : BUSY_Pin */
   GPIO_InitStruct.Pin = BUSY_Pin;
@@ -283,94 +329,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUSY_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : OUTA_Pin OUTB_Pin */
-  GPIO_InitStruct.Pin = OUTA_Pin|OUTB_Pin;
+  /*Configure GPIO pin : OUTB_Pin */
+  GPIO_InitStruct.Pin = OUTB_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(OUTB_GPIO_Port, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 4 */
-void Delay(uint32_t nCount) 
-{ 
-  for(; nCount != 0; nCount--); 
-} 
-
-void AD7606_STARTCONV(void)
-{
-  AD7606_CONVST_A_L;
-  AD7606_CONVST_B_L;
-  Delay(0xF);
-  AD7606_CONVST_A_H;
-  AD7606_CONVST_B_H;
-}
-
-uint16_t ad7606_ReadBytes(void)
-{
-  uint16_t usData = 0;
-  for (uint8_t i = 0; i < 16; i++)
-  {
-    AD7606_SCLK_L;
-    usData = usData << 1;
-    if(AD7606_DOUTA)
-    {
-      usData |= 0x0001;
-    }
-    AD7606_SCLK_H;
-  }
-  return usData;		
-}
-
-void AD7606_RESET(void)
-{
-  AD7606_RESET_H;
-  Delay(0xFF);
-  AD7606_RESET_L;
-}
-
-void AD7606_SETOS(uint8_t osv)
-{
-  switch(osv)
-  {
-  case 0://000  200Kbps
-    AD7606OS0_L;
-    AD7606OS1_L;
-    AD7606OS2_L;
-    break;
-  case 1://001
-    AD7606OS0_H;
-    AD7606OS1_L;
-    AD7606OS2_L;
-    break;
-  case 2://010
-    AD7606OS0_L;
-    AD7606OS1_H;
-    AD7606OS2_L;
-    break;
-  case 3://011
-    AD7606OS0_H;
-    AD7606OS1_H;
-    AD7606OS2_L;
-    break;
-  case 4://100
-    AD7606OS0_L;
-    AD7606OS1_L;
-    AD7606OS2_H;
-    break;
-  case 5://101
-    AD7606OS0_H;
-    AD7606OS1_L;
-    AD7606OS2_H;
-    break;
-  case 6://110
-    AD7606OS0_L;
-    AD7606OS1_H;
-    AD7606OS2_H;
-    break;
-  }
-}
-
 
 /* USER CODE END 4 */
 

@@ -28,7 +28,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f1xx_hal.h"
+#include "stm32f4xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -58,30 +58,28 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define KEY0_Pin GPIO_PIN_4
-#define KEY0_GPIO_Port GPIOE
-#define OS0_Pin GPIO_PIN_0
-#define OS0_GPIO_Port GPIOC
-#define OS1_Pin GPIO_PIN_1
-#define OS1_GPIO_Port GPIOC
-#define OS2_Pin GPIO_PIN_2
-#define OS2_GPIO_Port GPIOC
-#define STA_Pin GPIO_PIN_4
-#define STA_GPIO_Port GPIOA
-#define STB_Pin GPIO_PIN_6
-#define STB_GPIO_Port GPIOA
-#define SCLK_Pin GPIO_PIN_10
-#define SCLK_GPIO_Port GPIOC
-#define RESET_Pin GPIO_PIN_11
-#define RESET_GPIO_Port GPIOC
-#define CS_Pin GPIO_PIN_12
-#define CS_GPIO_Port GPIOC
-#define BUSY_Pin GPIO_PIN_4
-#define BUSY_GPIO_Port GPIOB
-#define OUTA_Pin GPIO_PIN_6
-#define OUTA_GPIO_Port GPIOB
-#define OUTB_Pin GPIO_PIN_7
-#define OUTB_GPIO_Port GPIOB
+#define OS0_Pin GPIO_PIN_2
+#define OS0_GPIO_Port GPIOE
+#define STB_Pin GPIO_PIN_3
+#define STB_GPIO_Port GPIOE
+#define OS1_Pin GPIO_PIN_4
+#define OS1_GPIO_Port GPIOE
+#define OS2_Pin GPIO_PIN_5
+#define OS2_GPIO_Port GPIOE
+#define STA_Pin GPIO_PIN_6
+#define STA_GPIO_Port GPIOE
+#define SCK_Pin GPIO_PIN_7
+#define SCK_GPIO_Port GPIOF
+#define RST_Pin GPIO_PIN_8
+#define RST_GPIO_Port GPIOF
+#define CS_Pin GPIO_PIN_9
+#define CS_GPIO_Port GPIOF
+#define OUTA_Pin GPIO_PIN_0
+#define OUTA_GPIO_Port GPIOG
+#define BUSY_Pin GPIO_PIN_1
+#define BUSY_GPIO_Port GPIOG
+#define OUTB_Pin GPIO_PIN_1
+#define OUTB_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
