@@ -338,8 +338,6 @@ F 3 "~" H 5700 4000 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	5900 2800 6150 2800
-Wire Wire Line
 	5850 3700 5700 3700
 Wire Wire Line
 	5700 3700 5700 3850
@@ -350,7 +348,7 @@ Wire Wire Line
 	5700 4150 5700 4300
 Text Label 5700 4300 3    50   ~ 0
 VEE
-Text Label 5200 3100 2    50   ~ 0
+Text Label 5050 3100 2    50   ~ 0
 VEE
 Text Label 5900 2650 0    50   ~ 0
 PD
@@ -378,41 +376,15 @@ Wire Wire Line
 	5700 3250 5900 3250
 Wire Wire Line
 	5700 3250 5700 3400
-Text Label 2750 5400 0    50   ~ 0
-VCC
-Wire Wire Line
-	2750 5300 2750 5400
-Connection ~ 2750 4850
-Wire Wire Line
-	2750 5000 2750 4850
 $Comp
 L Device:R R1
 U 1 1 5D239622
-P 2750 5150
-F 0 "R1" H 2680 5104 50  0000 R CNN
-F 1 "1kΩ" H 2680 5195 50  0000 R CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 2680 5150 50  0001 C CNN
-F 3 "~" H 2750 5150 50  0001 C CNN
-	1    2750 5150
-	-1   0    0    1   
-$EndComp
-Text Label 2600 4850 2    50   ~ 0
-PD
-Wire Wire Line
-	2750 4850 2600 4850
-Text Label 2850 5050 0    50   ~ 0
-VEE
-Wire Wire Line
-	2850 4850 2850 5050
-$Comp
-L Connector:Conn_01x02_Male J1
-U 1 1 5D233CFF
-P 2850 4650
-F 0 "J1" V 2912 4694 50  0000 L CNN
-F 1 "Conn_01x02_Male" V 3003 4694 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x02_P1.00mm_Vertical" H 2850 4650 50  0001 C CNN
-F 3 "~" H 2850 4650 50  0001 C CNN
-	1    2850 4650
+P 6400 2650
+F 0 "R1" H 6330 2604 50  0000 R CNN
+F 1 "1kΩ" H 6330 2695 50  0000 R CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 6330 2650 50  0001 C CNN
+F 3 "~" H 6400 2650 50  0001 C CNN
+	1    6400 2650
 	0    1    1    0   
 $EndComp
 Wire Wire Line
@@ -581,4 +553,12 @@ Wire Wire Line
 	4800 4600 4800 4750
 Wire Wire Line
 	6700 4750 6700 4600
+Wire Wire Line
+	5900 2650 6250 2650
+Wire Wire Line
+	6550 2650 6550 2800
+Wire Wire Line
+	5900 2800 6550 2800
+Wire Wire Line
+	5200 3100 5050 3100
 $EndSCHEMATC

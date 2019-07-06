@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:eval-board-ADA4817-1-cache
 EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
@@ -401,7 +402,7 @@ F 1 "10uF" H 7515 4905 50  0000 L CNN
 F 2 "Capacitor_SMD:CP_Elec_4x5.3" H 7400 4950 50  0001 C CNN
 F 3 "~" H 7400 4950 50  0001 C CNN
 	1    7400 4950
-	1    0    0    -1  
+	-1   0    0    1   
 $EndComp
 $Comp
 L Device:CP1 C4
