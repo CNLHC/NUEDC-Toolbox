@@ -1,54 +1,86 @@
-//
-// Created by cn on 2019/5/11.
-//
+#include "IAbstractSPI.hpp"
+#include "IAbstractGPIO.hpp"
+#include <stdint.h>
 
-#include "AD9910Driver.h"
-#include "libMPSSE_spi.h"
-#include <chrono>
-#include <thread>
+#ifndef AFTESTER_SRC_AD9910DRIVER_H_
+#define AFTESTER_SRC_AD9910DRIVER_H_
 
-bool AD9910Driver::WriteRegister(uint8 address, uint8 length, uint8 *data) {
+template <typename T>
+class AD9910Driver {
+    typedef uint8_t uint8;
+    typedef uint32_t uint32;
+    typedef uint16_t uint16;
+    typedef uint64_t uint64;
+public:
+    AD9910Driver(IAbstractSPI *SPIHandle,uint16 CsAddress,IAbstractGPIO<T> *GPIOHandle );
+    bool WriteRegister(uint8 address, uint8 length, uint8 *data);
+    bool ReadRegister(uint8 address, uint8 length, uint8 *buf);
+    void Init();
+    void setSingleTuneOutput(uint16 amp,double Freq);
+    void linearFreqSweep(double Start, double Stop, double seconds);
+
+private:
+    void pIOUSet();
+    void pIOUReset();
+    IAbstractSPI *mSPIHandle;
+    IAbstractGPIO<T> *mGPIOHandle;
+    uint8  mIOUpdatePinNo;
+    uint32 mMPSSEConfig;
+    uint16 mCsAddress;
+};
+
+#endif // AFTESTER_SRC_AD9910DRIVER_H_
+
+template <typename T>
+bool AD9910Driver<T>::WriteRegister(uint8 address, uint8 length, uint8 *data) {
     mSPIHandle->ChangeCSAddress(this->mCsAddress);
     uint8 ad9910cmd = address & 0b01111111;
     uint32 writternCb;
     mSPIHandle->WriteBytes(&ad9910cmd, 1, 1000, false);
     mSPIHandle->WriteBytes(data, length, 1000, true);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+	
     pIOUReset();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
     pIOUSet();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+
     pIOUReset();
-    return TRUE;
+    return true;
 }
 
-bool AD9910Driver::ReadRegister(uint8 address, uint8 length, uint8 *buf) {
+template <typename T>
+bool AD9910Driver<T>::ReadRegister(uint8 address, uint8 length, uint8 *buf) {
     mSPIHandle->ChangeCSAddress(this->mCsAddress);
     uint8 ad9910cmd = address | 0b10000000;
     mSPIHandle->WriteBytes(&ad9910cmd, 1, 1000);
     mSPIHandle->ReadBytes(buf, length, 1000, true);
+		return true;
 }
 
-AD9910Driver::AD9910Driver(IAbstractSPI *SPIHandle,
+template <typename T>
+AD9910Driver<T>::AD9910Driver(IAbstractSPI *SPIHandle,
                            uint16 CSAddress,
-                          IAbstractGPIO<uint8>*GPIOHandle) : mCsAddress(CSAddress),
+                          IAbstractGPIO<T>*GPIOHandle) : mCsAddress(CSAddress),
                                                  mSPIHandle(SPIHandle),
                                                  mGPIOHandle(GPIOHandle)
 {}
 
 
 
-void AD9910Driver::pIOUReset() {
+template <typename T>
+void AD9910Driver<T>::pIOUReset() {
 //    mBitMode.BitReset(mGPIOHandle, mIOUpdatePinNo);
-    mGPIOHandle->ReSetBit(4);
+    mGPIOHandle->ReSetBit(3);
 }
 
-void AD9910Driver::pIOUSet() {
+template <typename T>
+void AD9910Driver<T>::pIOUSet() {
 //    mBitMode.BitSet(mGPIOHandle, mIOUpdatePinNo);
-    mGPIOHandle->SetBit(4);
+    mGPIOHandle->SetBit(3);
 }
 
-void AD9910Driver::Init() {
+template <typename T>
+void AD9910Driver<T>::Init() {
     //Set CFR1
     uint8 test[4] = {0, 0x40, 0x00, 0x02};
     WriteRegister(0x00, 4, test);
@@ -68,11 +100,12 @@ void AD9910Driver::Init() {
 //  For Test
     uint8 db[4];
     ReadRegister(0x01, 4, db);
-    for (auto &i : db)
-        printf("0x%x\n", i);
+//    for (auto &i : db)
+//        printf("0x%x\n", i);
 }
 
-void AD9910Driver::setSingleTuneOutput(uint16 amp, double Freq) {
+template <typename T>
+void AD9910Driver<T>::setSingleTuneOutput(uint16 amp, double Freq) {
 
     uint32 FTW = (uint64) Freq * 4294967296 / 1000000000;
     uint8 profile[8] = {0x00, 0x00, 0x00, 0x00, 0x0a, 0x3d, 0x70, 0xa4};
@@ -88,7 +121,8 @@ void AD9910Driver::setSingleTuneOutput(uint16 amp, double Freq) {
 }
 
 
-void AD9910Driver::linearFreqSweep(double Start, double Stop, double seconds) {
+template <typename T>
+void AD9910Driver<T>::linearFreqSweep(double Start, double Stop, double seconds) {
     if (Stop < Start)
         return;
     uint64 tTimeStep = (seconds * 1000000) / 100.0;

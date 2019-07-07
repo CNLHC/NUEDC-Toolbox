@@ -65,7 +65,7 @@ int main() {
     auto gSPI= new ftdiSPI(spiHandle,SPI_CONFIG_OPTION_MODE2 | SPI_CONFIG_OPTION_CS_DBUS5 |SPI_CONFIG_OPTION_CS_ACTIVELOW);
     auto gGPIO = new ftdiGPIO(GPIOHandle);
 
-    auto h9910 = AD9910Driver(gSPI,0,gGPIO);
+    auto h9910 = AD9910Driver<uint8_t>(gSPI,0,gGPIO);
     auto voltageMapping = [](double voltage)
     {
         return uint16(23.396* voltage  - 26.597);

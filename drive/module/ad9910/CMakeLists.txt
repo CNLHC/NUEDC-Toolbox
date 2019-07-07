@@ -10,8 +10,8 @@ add_subdirectory(../../bridge/ftdi ../../bridge/ftdi)
 add_subdirectory(../../bridge/stm32/half1 ../../bridge/stm32/half1)
 
 add_library(ad9910
-            src/AD9910Driver.cpp
-            inc/AD9910Driver.h )
+        AD9910Driver.hpp
+            )
 
 target_include_directories(ad9910
         PRIVATE ../../gio

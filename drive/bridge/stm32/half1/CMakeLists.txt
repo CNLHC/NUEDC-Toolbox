@@ -7,7 +7,7 @@ ADD_COMPILE_DEFINITIONS(STM32F103xB)
 
 add_library(HALF1Bridge SHARED
             GPIOBridge.cpp
-        )
+            SPIBridge.cpp )
 
 target_include_directories(HALF1Bridge
         PUBLIC  ../../../gio
