@@ -1,16 +1,18 @@
 project(awesome232-test9910)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.7)
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
 include_directories(
         ../../bridge/ftdi
         ../../gio
 )
 add_subdirectory(../../bridge/ftdi ../../bridge/ftdi)
+add_subdirectory(../../bridge/stm32/half1 ../../bridge/stm32/half1)
 
 add_library(ad9910
             src/AD9910Driver.cpp
-            inc/AD9910Driver.h
-        )
+            inc/AD9910Driver.h )
+
 target_include_directories(ad9910
         PRIVATE ../../gio
         PRIVATE ./inc
