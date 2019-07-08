@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:active_filter-cache
 EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
@@ -13,17 +14,6 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-$Comp
-L Amplifier_Operational:ADA4075-2 U1
-U 1 1 5D204576
-P 6000 1950
-F 0 "U1" H 6000 2317 50  0000 C CNN
-F 1 "ADA4075-2" H 6000 2226 50  0000 C CNN
-F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 6000 1950 50  0001 C CNN
-F 3 "https://www.analog.com/static/imported-files/data_sheets/ADA4075-2.pdf" H 6000 1950 50  0001 C CNN
-	1    6000 1950
-	1    0    0    -1  
-$EndComp
 $Comp
 L Device:C C3
 U 1 1 5D205F37
@@ -141,18 +131,11 @@ Wire Wire Line
 Wire Wire Line
 	5750 1400 6800 1400
 Wire Wire Line
-	6800 1400 6800 1950
-Wire Wire Line
-	6800 1950 6300 1950
-Wire Wire Line
 	5700 2050 5600 2050
 Wire Wire Line
 	5600 2050 5600 2400
 Wire Wire Line
 	5600 2400 6000 2400
-Wire Wire Line
-	6800 2400 6800 1950
-Connection ~ 6800 1950
 Wire Wire Line
 	5100 2000 5100 1850
 Connection ~ 5100 1850
@@ -315,31 +298,7 @@ Wire Wire Line
 	6800 3750 7250 3750
 Connection ~ 6800 3750
 Wire Wire Line
-	6800 1950 7200 1950
-$Comp
-L Jumper:Jumper_2_Bridged JP2
-U 1 1 5D227BFD
-P 6200 4200
-F 0 "JP2" H 6200 4395 50  0000 C CNN
-F 1 "Jumper_2_Bridged" H 6200 4304 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 6200 4200 50  0001 C CNN
-F 3 "~" H 6200 4200 50  0001 C CNN
-	1    6200 4200
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
 	6400 4200 6800 4200
-$Comp
-L Jumper:Jumper_2_Bridged JP4
-U 1 1 5D228967
-P 6800 4450
-F 0 "JP4" V 6754 4508 50  0000 L CNN
-F 1 "Jumper_2_Bridged" V 6845 4508 50  0000 L CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 6800 4450 50  0001 C CNN
-F 3 "~" H 6800 4450 50  0001 C CNN
-	1    6800 4450
-	0    1    1    0   
-$EndComp
 $Comp
 L power:GND #PWR04
 U 1 1 5D2294C0
@@ -356,32 +315,8 @@ Wire Wire Line
 Wire Wire Line
 	6800 4250 6800 4200
 Connection ~ 6800 4200
-$Comp
-L Jumper:Jumper_2_Bridged JP1
-U 1 1 5D22E215
-P 6200 2400
-F 0 "JP1" H 6200 2595 50  0000 C CNN
-F 1 "Jumper_2_Bridged" H 6200 2504 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 6200 2400 50  0001 C CNN
-F 3 "~" H 6200 2400 50  0001 C CNN
-	1    6200 2400
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6400 2400 6800 2400
 Wire Wire Line
 	4550 3650 4700 3650
-$Comp
-L Jumper:Jumper_2_Bridged JP3
-U 1 1 5D22EFCC
-P 6800 2600
-F 0 "JP3" V 6754 2658 50  0000 L CNN
-F 1 "Jumper_2_Bridged" V 6845 2658 50  0000 L CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 6800 2600 50  0001 C CNN
-F 3 "~" H 6800 2600 50  0001 C CNN
-	1    6800 2600
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	6800 3250 6800 3750
 Wire Wire Line
@@ -415,7 +350,6 @@ $EndComp
 Connection ~ 4700 3650
 Wire Wire Line
 	4700 3650 4800 3650
-Connection ~ 6800 2400
 $Comp
 L power:GND #PWR03
 U 1 1 5D23AC21
@@ -482,7 +416,6 @@ Wire Wire Line
 	7450 3950 7450 4650
 Wire Wire Line
 	7450 4650 6800 4650
-Connection ~ 6800 4650
 Wire Wire Line
 	3650 3850 3650 4250
 Wire Wire Line
@@ -497,13 +430,6 @@ Wire Wire Line
 Connection ~ 5100 2350
 Wire Wire Line
 	5100 2350 5100 2300
-Wire Wire Line
-	6800 2850 6800 2800
-Wire Wire Line
-	7400 2150 7400 2800
-Wire Wire Line
-	7400 2800 6800 2800
-Connection ~ 6800 2800
 Wire Wire Line
 	4950 5800 4800 5800
 Wire Wire Line
@@ -546,4 +472,95 @@ Wire Wire Line
 	5400 5250 5650 5250
 Text Label 5650 5250 0    50   ~ 0
 VCC
+$Comp
+L Device:R_POT RV2
+U 1 1 5D26EB7B
+P 6150 4200
+F 0 "RV2" V 5943 4200 50  0000 C CNN
+F 1 "R_POT" V 6034 4200 50  0000 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 6150 4200 50  0001 C CNN
+F 3 "~" H 6150 4200 50  0001 C CNN
+	1    6150 4200
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R_POT RV4
+U 1 1 5D26EECE
+P 6800 4400
+F 0 "RV4" H 6730 4354 50  0000 R CNN
+F 1 "R_POT" H 6730 4445 50  0000 R CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 6800 4400 50  0001 C CNN
+F 3 "~" H 6800 4400 50  0001 C CNN
+	1    6800 4400
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6650 4400 6650 4650
+Wire Wire Line
+	6650 4650 6800 4650
+Connection ~ 6800 4650
+Wire Wire Line
+	6150 4350 6400 4350
+Wire Wire Line
+	6400 4350 6400 4200
+Wire Wire Line
+	7400 2150 7400 2800
+Connection ~ 6800 2800
+Wire Wire Line
+	6650 2800 6800 2800
+Wire Wire Line
+	6650 2550 6650 2800
+Connection ~ 6800 2400
+$Comp
+L Device:R_POT RV3
+U 1 1 5D26BC6B
+P 6800 2550
+F 0 "RV3" H 6730 2504 50  0000 R CNN
+F 1 "R_POT" H 6730 2595 50  0000 R CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 6800 2550 50  0001 C CNN
+F 3 "~" H 6800 2550 50  0001 C CNN
+	1    6800 2550
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6400 2550 6400 2400
+Wire Wire Line
+	6150 2550 6400 2550
+$Comp
+L Device:R_POT RV1
+U 1 1 5D268119
+P 6150 2400
+F 0 "RV1" V 5943 2400 50  0000 C CNN
+F 1 "R_POT" V 6034 2400 50  0000 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 6150 2400 50  0001 C CNN
+F 3 "~" H 6150 2400 50  0001 C CNN
+	1    6150 2400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7400 2800 6800 2800
+Wire Wire Line
+	6800 2850 6800 2800
+Wire Wire Line
+	6400 2400 6800 2400
+Wire Wire Line
+	6800 1950 7200 1950
+Connection ~ 6800 1950
+Wire Wire Line
+	6800 2400 6800 1950
+Wire Wire Line
+	6800 1950 6300 1950
+Wire Wire Line
+	6800 1400 6800 1950
+$Comp
+L Amplifier_Operational:ADA4075-2 U1
+U 1 1 5D204576
+P 6000 1950
+F 0 "U1" H 6000 2317 50  0000 C CNN
+F 1 "ADA4075-2" H 6000 2226 50  0000 C CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 6000 1950 50  0001 C CNN
+F 3 "https://www.analog.com/static/imported-files/data_sheets/ADA4075-2.pdf" H 6000 1950 50  0001 C CNN
+	1    6000 1950
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

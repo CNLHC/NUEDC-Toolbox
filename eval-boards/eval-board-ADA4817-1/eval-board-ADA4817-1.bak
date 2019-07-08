@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:eval-board-ADA4817-1-cache
 EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
@@ -110,16 +111,14 @@ Connection ~ 3750 3300
 $Comp
 L Device:R R8
 U 1 1 5D1F3FF1
-P 4800 2650
-F 0 "R8" V 4593 2650 50  0000 C CNN
-F 1 "RF" V 4684 2650 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 4730 2650 50  0001 C CNN
-F 3 "~" H 4800 2650 50  0001 C CNN
-	1    4800 2650
-	0    1    1    0   
+P 4600 2250
+F 0 "R8" V 4393 2250 50  0000 C CNN
+F 1 "RF" V 4484 2250 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric" V 4530 2250 50  0001 C CNN
+F 3 "~" H 4600 2250 50  0001 C CNN
+	1    4600 2250
+	0    -1   -1   0   
 $EndComp
-Wire Wire Line
-	4950 2650 5100 2650
 Wire Wire Line
 	4650 2650 4300 2650
 Wire Wire Line
@@ -127,26 +126,17 @@ Wire Wire Line
 $Comp
 L Device:C C3
 U 1 1 5D1F4AF7
-P 4800 2250
-F 0 "C3" V 4548 2250 50  0000 C CNN
-F 1 "CF" V 4639 2250 50  0000 C CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 4838 2100 50  0001 C CNN
-F 3 "~" H 4800 2250 50  0001 C CNN
-	1    4800 2250
+P 4800 2650
+F 0 "C3" V 4548 2650 50  0000 C CNN
+F 1 "CF" V 4639 2650 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 4838 2500 50  0001 C CNN
+F 3 "~" H 4800 2650 50  0001 C CNN
+	1    4800 2650
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	4650 2250 4300 2250
-Wire Wire Line
 	4300 2250 4300 2650
 Connection ~ 4300 2650
-Wire Wire Line
-	4950 2250 5100 2250
-Wire Wire Line
-	5100 2250 5100 2650
-Connection ~ 5100 2650
-Wire Wire Line
-	5100 2650 5200 2650
 $Comp
 L Device:R R4
 U 1 1 5D1F59D6
@@ -401,7 +391,7 @@ F 1 "10uF" H 7515 4905 50  0000 L CNN
 F 2 "Capacitor_SMD:CP_Elec_4x5.3" H 7400 4950 50  0001 C CNN
 F 3 "~" H 7400 4950 50  0001 C CNN
 	1    7400 4950
-	1    0    0    -1  
+	-1   0    0    1   
 $EndComp
 $Comp
 L Device:CP1 C4
@@ -561,4 +551,92 @@ Wire Wire Line
 	5900 2800 6550 2800
 Wire Wire Line
 	5200 3100 5050 3100
+$Comp
+L Device:R R?
+U 1 1 5D22C675
+P 4600 2050
+F 0 "R?" V 4700 2050 50  0000 C CNN
+F 1 "R" V 4500 2050 50  0000 C CNN
+F 2 "" V 4530 2050 50  0001 C CNN
+F 3 "~" H 4600 2050 50  0001 C CNN
+	1    4600 2050
+	0    -1   1    0   
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5D22DEC7
+P 4600 1600
+F 0 "RV?" V 4850 1600 50  0000 C CNN
+F 1 "R_POT" V 4500 1600 50  0000 C CNN
+F 2 "" H 4600 1600 50  0001 C CNN
+F 3 "~" H 4600 1600 50  0001 C CNN
+	1    4600 1600
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4950 2650 5100 2650
+Wire Wire Line
+	4450 2250 4300 2250
+$Comp
+L Device:R R?
+U 1 1 5D2342B5
+P 4600 1850
+F 0 "R?" V 4500 1850 50  0000 C CNN
+F 1 "R" V 4550 1850 50  0000 C CNN
+F 2 "" V 4530 1850 50  0001 C CNN
+F 3 "~" H 4600 1850 50  0001 C CNN
+	1    4600 1850
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4450 1850 4300 1850
+Wire Wire Line
+	4300 1850 4300 2050
+Connection ~ 4300 2250
+Wire Wire Line
+	4450 2050 4300 2050
+Connection ~ 4300 2050
+Wire Wire Line
+	4300 2050 4300 2250
+Wire Wire Line
+	4450 1600 4300 1600
+Wire Wire Line
+	4300 1600 4300 1850
+Connection ~ 4300 1850
+$Comp
+L Jumper:Jumper_3_Open JP?
+U 1 1 5D243A9D
+P 4950 1950
+F 0 "JP?" V 5000 1450 50  0000 L CNN
+F 1 "Jumper_3_Open" V 4950 1150 50  0000 L CNN
+F 2 "" H 4950 1950 50  0001 C CNN
+F 3 "~" H 4950 1950 50  0001 C CNN
+	1    4950 1950
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5100 1950 5100 2650
+Connection ~ 5100 2650
+Wire Wire Line
+	5100 2650 5200 2650
+Wire Wire Line
+	4950 1700 4950 1450
+Wire Wire Line
+	4950 1450 4600 1450
+Wire Wire Line
+	4950 2200 4800 2200
+Wire Wire Line
+	4800 2200 4800 2250
+Wire Wire Line
+	4800 2250 4750 2250
+Wire Wire Line
+	4750 2050 4800 2050
+Wire Wire Line
+	4800 2050 4800 2200
+Connection ~ 4800 2200
+Wire Wire Line
+	4750 1850 4800 1850
+Wire Wire Line
+	4800 1850 4800 2050
+Connection ~ 4800 2050
 $EndSCHEMATC
