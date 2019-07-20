@@ -8,7 +8,7 @@
 #include <lib/libMPSSE_spi.h>
 #include "SPIBridge.h"
 #include "GPIOBridge.h"
-#include "AD9910Driver.h"
+#include "AD9910Driver.hpp"
 
 using namespace std;
 auto CheckStatus = [](FT_STATUS ft, const char *s) {	
