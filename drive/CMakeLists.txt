@@ -6,6 +6,7 @@ include_directories(
         bridge/stm32/half1
 )
 add_subdirectory(module/ad9910)
+add_subdirectory(module/ad7606)
 
 
 
