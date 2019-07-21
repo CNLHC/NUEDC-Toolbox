@@ -12,6 +12,7 @@ add_subdirectory(../../bridge/stm32/half1 ../../bridge/stm32/half1)
 add_library(ad9910
         AD9910Driver.hpp
             )
+set_target_properties(ad9910 PROPERTIES LINKER_LANGUAGE CXX)
 
 target_include_directories(ad9910
         PRIVATE ../../gio
