@@ -65,8 +65,12 @@ void Error_Handler(void);
 #define AD9910IOUP_GPIO_Port GPIOE
 #define USER_Btn_Pin GPIO_PIN_13
 #define USER_Btn_GPIO_Port GPIOC
+#define DAC8563LDAC_Pin GPIO_PIN_0
+#define DAC8563LDAC_GPIO_Port GPIOF
 #define AD9910CS_Pin GPIO_PIN_1
 #define AD9910CS_GPIO_Port GPIOF
+#define DAC8563CS_Pin GPIO_PIN_2
+#define DAC8563CS_GPIO_Port GPIOF
 #define AD7606STA_Pin GPIO_PIN_6
 #define AD7606STA_GPIO_Port GPIOF
 #define AD7606STB_Pin GPIO_PIN_7
@@ -115,6 +119,8 @@ void Error_Handler(void);
 #define TCK_GPIO_Port GPIOA
 #define AD7606RST_Pin GPIO_PIN_15
 #define AD7606RST_GPIO_Port GPIOA
+#define DAC8563CLR_Pin GPIO_PIN_1
+#define DAC8563CLR_GPIO_Port GPIOD
 #define AD7606CS_Pin GPIO_PIN_2
 #define AD7606CS_GPIO_Port GPIOD
 #define AD9910PWR_Pin GPIO_PIN_6

@@ -22,6 +22,7 @@ INSTALL(
 add_subdirectory(bridge/stm32/f4)
 add_subdirectory(module/ad9910)
 add_subdirectory(module/ad7606)
+add_subdirectory(module/dac8563)
 
 
 

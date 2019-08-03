@@ -56,7 +56,8 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOE, AD9910PF0_Pin|AD9910IOUP_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, AD9910CS_Pin|AD7606STA_Pin|AD7606STB_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOF, DAC8563LDAC_Pin|AD9910CS_Pin|DAC8563CS_Pin|AD7606STA_Pin 
+                          |AD7606STB_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LD3_Pin|LD2_Pin, GPIO_PIN_RESET);
@@ -71,7 +72,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(AD7606RST_GPIO_Port, AD7606RST_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, AD7606CS_Pin|AD9910PWR_Pin|AD9910PF2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, DAC8563CLR_Pin|AD7606CS_Pin|AD9910PWR_Pin|AD9910PF2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PEPin PEPin */
   GPIO_InitStruct.Pin = AD9910PF0_Pin|AD9910IOUP_Pin;
@@ -86,8 +87,10 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(USER_Btn_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PFPin PFPin PFPin */
-  GPIO_InitStruct.Pin = AD9910CS_Pin|AD7606STA_Pin|AD7606STB_Pin;
+  /*Configure GPIO pins : PFPin PFPin PFPin PFPin 
+                           PFPin */
+  GPIO_InitStruct.Pin = DAC8563LDAC_Pin|AD9910CS_Pin|DAC8563CS_Pin|AD7606STA_Pin 
+                          |AD7606STB_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -127,8 +130,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(AD7606RST_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PDPin PDPin PDPin */
-  GPIO_InitStruct.Pin = AD7606CS_Pin|AD9910PWR_Pin|AD9910PF2_Pin;
+  /*Configure GPIO pins : PDPin PDPin PDPin PDPin */
+  GPIO_InitStruct.Pin = DAC8563CLR_Pin|AD7606CS_Pin|AD9910PWR_Pin|AD9910PF2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

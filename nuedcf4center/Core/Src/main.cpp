@@ -32,6 +32,7 @@
 #include "SPIBridge.h"
 #include "AD7606Driver.hpp"
 #include "AD9910Driver.hpp"
+#include "DAC8563Driver.hpp"
 #include <cstdio>
 
 /* USER CODE END Includes */
@@ -130,11 +131,18 @@ int main(void)
 		  IGPIOPin<uint16_t>(hGPIOG,2),
   };
 
+  IGPIOPin<uint16_t> PinCfgDAC8563[3]={
+		  IGPIOPin<uint16_t>(hGPIOF,2),
+		  IGPIOPin<uint16_t>(hGPIOF,0),
+		  IGPIOPin<uint16_t>(hGPIOD,1),
+  };
+
   uint8_t db[4];
   auto hAD7606 = AD7606Driver<uint16_t>(hSPI1,PinCfgAD7606);
   auto hAD9910 = AD9910Driver<uint16_t>(hSPI1,PinCfgAD9910);
-
+  auto hDAC8563 = DAC8563Driver<uint16_t> (hSPI1,PinCfgDAC8563);
   hAD9910.Init();
+  hDAC8563.Init();
 
   hAD9910.setSingleTuneOutput(0x3fff,233333333);
 
@@ -147,15 +155,17 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  hAD9910.ReadRegister(0x01, 4, db);
-	  for (auto &i : db)
-		  printf("0x%x\n", i);
+//	  hAD9910.ReadRegister(0x01, 4, db);
+//	  for (auto &i : db)
+//		  printf("0x%x\n", i);
 //	  HAL_Delay(1000);
 //	  auto a = hAD7606.ReadAllChannels();
 //	  for(auto &i :a)
 //		  printf("%d, ",i);
 //
 //	  printf("\n");
+
+	  hDAC8563.setDualChannelValue(2.23);
 	  HAL_Delay(1000);
 //
 //	  hAD9910.ReadRegister(0x01, 4, db);
