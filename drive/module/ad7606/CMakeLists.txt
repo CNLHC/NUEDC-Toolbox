@@ -17,10 +17,19 @@ target_include_directories(ad7606
         PRIVATE ./inc
         PRIVATE ../../bridge/ftdi/lib )
 
-add_executable( ad7606-testftdi
-        testftdi.cpp )
-target_link_libraries(ad7606-testftdi
-        ad7606)
-target_link_libraries(ad7606-testftdi
-        FTDIBridge)
+
+set_target_properties(ad7606 PROPERTIES PUBLIC_HEADER "AD7606Driver.hpp")
+INSTALL(
+        TARGETS   ad7606
+        LIBRARY DESTINATION nuedcdist/nuedclib/module
+        ARCHIVE DESTINATION nuedcdist/nuedclib/module
+        PUBLIC_HEADER DESTINATION nuedcdist/nuedcinc
+)
+
+#add_executable( ad7606-testftdi
+#        testftdi.cpp )
+#target_link_libraries(ad7606-testftdi
+#        ad7606)
+#target_link_libraries(ad7606-testftdi
+#        FTDIBridge)
 
