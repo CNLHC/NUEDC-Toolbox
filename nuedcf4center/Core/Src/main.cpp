@@ -31,6 +31,7 @@
 #include "GPIOBridge.h"
 #include "SPIBridge.h"
 #include "AD7606Driver.hpp"
+#include "AD9910Driver.hpp"
 #include <cstdio>
 
 /* USER CODE END Includes */
@@ -109,6 +110,7 @@ int main(void)
   auto hGPIOD = new HALF1Bridge(GPIOD);
   auto hGPIOE = new HALF1Bridge(GPIOE);
   auto hGPIOF = new HALF1Bridge(GPIOF);
+  auto hGPIOG = new HALF1Bridge(GPIOG);
   auto hSPI1 = new HALF1SPIBridge(&hspi1);
 
   IGPIOPin<uint16_t> PinCfgAD7606[4]={
@@ -117,8 +119,24 @@ int main(void)
 		  IGPIOPin<uint16_t>(hGPIOF,6),
 		  IGPIOPin<uint16_t>(hGPIOF,7),
   };
-  auto hAD7606 = AD7606Driver<uint16_t>(hSPI1,PinCfgAD7606);
 
+  IGPIOPin<uint16_t> PinCfgAD9910[7]={
+		  IGPIOPin<uint16_t>(hGPIOF,1),
+		  IGPIOPin<uint16_t>(hGPIOE,3),
+		  IGPIOPin<uint16_t>(hGPIOG,3),
+		  IGPIOPin<uint16_t>(hGPIOD,7),
+		  IGPIOPin<uint16_t>(hGPIOE,4),
+		  IGPIOPin<uint16_t>(hGPIOD,6),
+		  IGPIOPin<uint16_t>(hGPIOG,2),
+  };
+
+  uint8_t db[4];
+  auto hAD7606 = AD7606Driver<uint16_t>(hSPI1,PinCfgAD7606);
+  auto hAD9910 = AD9910Driver<uint16_t>(hSPI1,PinCfgAD9910);
+
+  hAD9910.Init();
+
+  hAD9910.setSingleTuneOutput(0x3fff,233333333);
 
 
 
@@ -129,12 +147,21 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  HAL_Delay(100);
-	  auto a = hAD7606.ReadAllChannels();
-	  for(auto &i :a)
-		  printf("%d, ",i);
-	  printf("\n");
-	  HAL_Delay(100);
+	  hAD9910.ReadRegister(0x01, 4, db);
+	  for (auto &i : db)
+		  printf("0x%x\n", i);
+//	  HAL_Delay(1000);
+//	  auto a = hAD7606.ReadAllChannels();
+//	  for(auto &i :a)
+//		  printf("%d, ",i);
+//
+//	  printf("\n");
+	  HAL_Delay(1000);
+//
+//	  hAD9910.ReadRegister(0x01, 4, db);
+//	  for (auto &i : db)
+//		  printf("0x%x\n", i);
+//
 
 
 

@@ -59,8 +59,14 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define AD9910PF0_Pin GPIO_PIN_3
+#define AD9910PF0_GPIO_Port GPIOE
+#define AD9910IOUP_Pin GPIO_PIN_4
+#define AD9910IOUP_GPIO_Port GPIOE
 #define USER_Btn_Pin GPIO_PIN_13
 #define USER_Btn_GPIO_Port GPIOC
+#define AD9910CS_Pin GPIO_PIN_1
+#define AD9910CS_GPIO_Port GPIOF
 #define AD7606STA_Pin GPIO_PIN_6
 #define AD7606STA_GPIO_Port GPIOF
 #define AD7606STB_Pin GPIO_PIN_7
@@ -83,6 +89,10 @@ void Error_Handler(void);
 #define STLK_RX_GPIO_Port GPIOD
 #define STLK_TX_Pin GPIO_PIN_9
 #define STLK_TX_GPIO_Port GPIOD
+#define AD9910RST_Pin GPIO_PIN_2
+#define AD9910RST_GPIO_Port GPIOG
+#define AD9910PF1_Pin GPIO_PIN_3
+#define AD9910PF1_GPIO_Port GPIOG
 #define USB_PowerSwitchOn_Pin GPIO_PIN_6
 #define USB_PowerSwitchOn_GPIO_Port GPIOG
 #define USB_OverCurrent_Pin GPIO_PIN_7
@@ -107,6 +117,10 @@ void Error_Handler(void);
 #define AD7606RST_GPIO_Port GPIOA
 #define AD7606CS_Pin GPIO_PIN_2
 #define AD7606CS_GPIO_Port GPIOD
+#define AD9910PWR_Pin GPIO_PIN_6
+#define AD9910PWR_GPIO_Port GPIOD
+#define AD9910PF2_Pin GPIO_PIN_7
+#define AD9910PF2_GPIO_Port GPIOD
 #define RMII_TX_EN_Pin GPIO_PIN_11
 #define RMII_TX_EN_GPIO_Port GPIOG
 #define RMII_TXD0_Pin GPIO_PIN_13
