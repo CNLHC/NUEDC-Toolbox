@@ -6,3 +6,5 @@ out
 # relative to Clion-IDE
 .idea
 cmake-build-debug 
+cmake-build-arm-release
+libs
