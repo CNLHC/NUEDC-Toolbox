@@ -33,6 +33,7 @@
 #include "AD7606Driver.hpp"
 #include "AD9910Driver.hpp"
 #include "DAC8563Driver.hpp"
+#include "AD9959Driver.hpp"
 #include <cstdio>
 
 /* USER CODE END Includes */
@@ -137,14 +138,26 @@ int main(void)
 		  IGPIOPin<uint16_t>(hGPIOD,1),
   };
 
+  //CS-IOUP-PWR-RST
+  IGPIOPin<uint16_t> PinCfgAD9959[4]={
+		  IGPIOPin<uint16_t>(hGPIOG,10),
+		  IGPIOPin<uint16_t>(hGPIOD,0),
+		  IGPIOPin<uint16_t>(hGPIOG,0),
+		  IGPIOPin<uint16_t>(hGPIOE,1),
+  };
+
+
   uint8_t db[4];
   auto hAD7606 = AD7606Driver<uint16_t>(hSPI1,PinCfgAD7606);
   auto hAD9910 = AD9910Driver<uint16_t>(hSPI1,PinCfgAD9910);
   auto hDAC8563 = DAC8563Driver<uint16_t> (hSPI1,PinCfgDAC8563);
-  hAD9910.Init();
-  hDAC8563.Init();
+  auto hAD9959 = AD9959Driver<uint16_t> (hSPI1,PinCfgAD9959);
+//  hAD9910.Init();
+//  hDAC8563.Init();
+  hAD9959.Init();
 
-  hAD9910.setSingleTuneOutput(0x3fff,233333333);
+//  hAD9910.setSingleTuneOutput()tput(0x3fff,233333333);
+  uint8_t a;
 
 
 
@@ -165,8 +178,8 @@ int main(void)
 //
 //	  printf("\n");
 
-	  hDAC8563.setDualChannelValue(2.23);
-	  HAL_Delay(1000);
+//	  hDAC8563.setDualChannelValue(2.23);
+//	  HAL_Delay(1000);
 //
 //	  hAD9910.ReadRegister(0x01, 4, db);
 //	  for (auto &i : db)
@@ -175,6 +188,10 @@ int main(void)
 
 
 
+	  hAD9959.setSingleOutput(0x9FFFFFFF);
+	  HAL_Delay(1000);
+	  hAD9959.ReadRegister(AD9959Driver<uint16_t>::AD9959CSR,1,&a);
+	  HAL_Delay(1000);
 
 
 
