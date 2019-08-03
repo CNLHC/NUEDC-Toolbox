@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name Parts)(type Legacy)(uri "C:/Users/Ashen One/Desktop/Project/EVAL-AD8368/Parts.lib")(options "")(descr ""))
+  (lib (name Common-Parts-Library)(type Legacy)(uri "C:/Users/Ashen One/Desktop/Project/MUX_EVAL/MUX_EVAL/LIB/Common-Parts-Library.lib")(options "")(descr ""))
+)
