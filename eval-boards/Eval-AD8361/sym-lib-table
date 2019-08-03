@@ -1,0 +1,12 @@
+(sym_lib_table
+  (lib (name NUEDC)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/active_filter-cache.lib)(options "")(descr ""))
+  (lib (name active_filter-cache)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/active_filter-cache.lib)(options "")(descr ""))
+  (lib (name ADA4522-cache)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/ADA4522-cache.lib)(options "")(descr ""))
+  (lib (name ADI)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/ADI.lib)(options "")(descr ""))
+  (lib (name Altera_MAX10-cache)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/Altera_MAX10-cache.lib)(options "")(descr ""))
+  (lib (name eval-board-ADA4817-1-cache)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/eval-board-ADA4817-1-cache.lib)(options "")(descr ""))
+  (lib (name GPOpAmp)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/GPOpAmp.lib)(options "")(descr ""))
+  (lib (name HMC346AMS8GE-cache)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/HMC346AMS8GE-cache.lib)(options "")(descr ""))
+  (lib (name single_AM_eval_board-cache)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/single_AM_eval_board-cache.lib)(options "")(descr ""))
+  (lib (name SPI-cache)(type Legacy)(uri /Users/liuhancheng/elec/NUEDC-Toolbox/eval-boards/commonlib/SPI-cache.lib)(options "")(descr ""))
+)
