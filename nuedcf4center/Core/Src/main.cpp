@@ -157,7 +157,7 @@ int main(void)
   hAD9959.Init();
 
 //  hAD9910.setSingleTuneOutput()tput(0x3fff,233333333);
-  uint8_t a;
+  uint8_t a[4];
 
 
 
@@ -167,6 +167,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  hAD9959.setSingleOutput(0x9FFFFFFF);
+	  HAL_Delay(1000);
+	  hAD9959.ReadRegister(AD9959Driver<uint16_t>::AD9959CFR,3,a);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 //	  hAD9910.ReadRegister(0x01, 4, db);
 //	  for (auto &i : db)
@@ -188,10 +192,6 @@ int main(void)
 
 
 
-	  hAD9959.setSingleOutput(0x9FFFFFFF);
-	  HAL_Delay(1000);
-	  hAD9959.ReadRegister(AD9959Driver<uint16_t>::AD9959CSR,1,&a);
-	  HAL_Delay(1000);
 
 
 

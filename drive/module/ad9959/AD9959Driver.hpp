@@ -23,6 +23,7 @@ public:
         AD9959CSR=0x00,
         AD9959FR1=0x01,
         AD9959FR2=0x02,
+        AD9959CFR=0x03,
         AD9959CFTW0=0x04
     };
     AD9959Driver(IAbstractSPI<T> *SPIHandle, IGPIOPin<T> PinList[4]);
@@ -48,6 +49,8 @@ AD9959Driver<T>::AD9959Driver(IAbstractSPI<T> *SPIHandle, IGPIOPin<T> PinList[4]
         mPinIOUP(PinList[AD9959IOUP]),
         mPinPWR(PinList[AD9959PWR]),
         mPinRESET(PinList[AD9959RESET]) {
+    mPinRESET.set();
+    for(int i=0;i<255;i++);
     mPinRESET.reset();
     mPinPWR.reset();
 }
@@ -87,6 +90,14 @@ void AD9959Driver<T>::setSingleOutput(uint32_t FTW) {
 }
 template<typename T>
 void AD9959Driver<T>::Init() {
+    mPinRESET.reset();
+    for(int i=0;i<255;i++);
+    mPinRESET.set();
+    //hardcode delay
+    for(int i=0;i<255;i++);
+
+    mPinRESET.reset();
+
     uint8_t buf[4];
     /*CSR0: Channel Select Register
       [7:4]: active high, enable channel, choose to 1111
@@ -96,7 +107,7 @@ void AD9959Driver<T>::Init() {
       So we use 1111_0_01_0 === 0xF2
   */
 
-    buf[0] = 0xF2;
+    buf[0] = 0x92;
     WriteRegister(AD9959CSR, 1, buf, false);
 
     /*FR1: Function Register 1
